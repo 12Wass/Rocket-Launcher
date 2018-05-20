@@ -10,7 +10,7 @@
   <body>
     <?php
     if (isset($_SESSION['flag'])) { ?>
-      <button onclick="disconnectUser()" value="Deconnexion">Deconnexion</button>
+      <a href="disconnect.php">Deconnexion</a>
 
   <?php   } else { ?>
     <a href="newConnexion.php">Connexion</a>
