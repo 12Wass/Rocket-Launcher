@@ -143,9 +143,9 @@ case 'brandUpdate';
 break;
 
 // 3
-case '3';
+case 'disconnectUser';
 
-function disconnect() { // This function completly destroys the running session of an user.
+// This function completly destroys the running session of an user. -- UNUNSED
   header('Location: index.php');
   session_start();
   $_SESSION = array();
@@ -157,8 +157,6 @@ function disconnect() { // This function completly destroys the running session 
       );
   }
   session_destroy();
-}
-
 break;
 
 // 4
