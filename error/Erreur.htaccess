@@ -1,0 +1,12 @@
+ErrorDocument 400 /Erreur.php?Erreur=400
+ErrorDocument 401 /Erreur.php?Erreur=401
+ErrorDocument 402 /Erreur.php?Erreur=402
+ErrorDocument 403 /Erreur.php?Erreur=403
+ErrorDocument 404 /Erreur.php?Erreur=404
+ErrorDocument 405 /Erreur.php?Erreur=405
+ErrorDocument 500 /Erreur.php?Erreur=500
+ErrorDocument 501 /Erreur.php?Erreur=501
+ErrorDocument 502 /Erreur.php?Erreur=502
+ErrorDocument 503 /Erreur.php?Erreur=503
+ErrorDocument 504 /Erreur.php?Erreur=504
+ErrorDocument 505 /Erreur.php?Erreur=505
