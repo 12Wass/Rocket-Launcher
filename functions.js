@@ -60,7 +60,7 @@ function updateInfluencer() {
     var request = new XMLHttpRequest();
     request.onreadystatechange = function() {
       if (request.readyState == 4 && request.status == 200) {
-        document.write(request.responseText);
+        console.log(request.responseText);
       }
     };
     request.open('POST', 'functions.php');
@@ -93,17 +93,22 @@ function brandUpdate() {
                   &urlEdit=${url}&firstnamerespEdit=${fNameRes}&lastnameresEdit=${lNameRes}
                   &functionSelect=${functionSelect}`);
 }
-  // Ununsed function : Useless.
-function disconnectUser() {
-  var functionSelect = 'disconnectUser';
 
-    var request = new XMLHttpRequest();
-    request.onreadystatechange = function() {
-      if (request.readyState == 4 && request.status == 200) {
-        console.log(request.responseText);
-      }
-    };
-    request.open('POST', 'functions.php');
-    request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    request.send(`functionSelect=${functionSelect}`);
+function sendMessage() {
+  var idSender = document.getElementById('idSender').value;
+  var name = document.getElementById('idReceiver').value;
+  var content = document.getElementById('content').value;
+  var functionSelect = 'sendMessage';
+
+
+  var request = new XMLHttpRequest();
+  request.onreadystatechange = function() {
+    if (request.readyState == 4 && request.status == 200) {
+      console.log(request.responseText);
+    }
+  };
+  request.open('POST', 'functions.php');
+  request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+  request.send(`idSender=${idSender}&name=${name}&content=${content}
+                &functionSelect=${functionSelect}`);
 }

@@ -1,3 +1,9 @@
+<?php
+	if (!isset($_SESSION)) {
+		echo 'Vous devez être connecté pour accéder à cette page';
+		}
+	else {
+	?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -5,7 +11,7 @@
 	<title>Facebook Authentification</title>
 </head>
 <body>
-	<button type="button" name="button" onclick="loginFacebook()">Login YourFacebook</button>
+	<button type="button" name="button" onclick="loginFacebook()">Login via Facebook</button>
 	<button type="button" name="button" onclick="logoutFacebook()">logout</button>
 	<script src="https://www.gstatic.com/firebasejs/5.0.2/firebase.js"></script>
 	<script>
@@ -19,31 +25,44 @@
 		};
 		firebase.initializeApp(config);
 		var provider = new firebase.auth.FacebookAuthProvider();
-		provider.addScope('user_birthday');
-		provider.addScope('user_managed_groups');
-		provider.addScope('user_posts');
 			function loginFacebook() {
 				firebase.auth().signInWithPopup(provider)
 				.then(function(result){
 					var token = result.credential.accessToken;
 					var user = result.user;
 					console.log(token);
-					console.log(user);
+					if (user != null) {
+  user.providerData.forEach(function (profile) {
+		var username = profile.displayName;
+		var useremail = profile.email;
+		var userphoto = profile.photoURL;
+		var userid = profile.uid;
+		var functionSelect = 'registerFacebook';
+		var request = new XMLHttpRequest();
+		request.onreadystatechange = function() {
+			if (request.readyState == 4 && request.status == 200){
+				console.log(request.responseText);
+			}
+		};
+		request.open('POST', 'functions.php');
+		request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+		request.send(`functionSelect=${functionSelect}&username=${username}&useremail=${useremail}&userphoto=${userphoto}&userid=${userid}`)
+  });
+}
 				}).catch(function(error){
 					console.log(error.code);
 					console.log(error.message);
 				});
 			}
-			{
-}
 			function logoutFacebook() {
 				firebase.auth().signOut()
 				.then(function() {
-					console.log('signout success')
+					console.log('Signout Success')
 				}, function(error) {
-					console.log('signout failed');
+					console.log('Signout Failed');
 				})
 			}
 	</script>
 </body>
 </html>
+<?php } ?>

@@ -143,9 +143,9 @@ case 'brandUpdate';
 break;
 
 // 3
-case 'disconnectUser';
+case '3';
 
-// This function completly destroys the running session of an user. -- UNUNSED
+function disconnect() { // This function completly destroys the running session of an user.
   header('Location: index.php');
   session_start();
   $_SESSION = array();
@@ -157,6 +157,8 @@ case 'disconnectUser';
       );
   }
   session_destroy();
+}
+
 break;
 
 // 4
@@ -543,8 +545,7 @@ break;
 // 11
 
 case '11';
-
-function sendMissionUpdate() {
+  // sendMissionUpdate : 11
   $req = $bdd->prepare('SELECT * FROM Campaigns WHERE id = ?');
   $req->execute(array($_POST['id']));
   $campaign = $req->fetch();
@@ -578,7 +579,33 @@ function sendMissionUpdate() {
       $query = $bdd->prepare('UPDATE Campaigns SET gratificationDetail = ? WHERE id = ?');
       $query->execute(array($_POST['gratificationDetailEdit'], $_POST['id']));
     }
-  }
+  break;
+
+case 'sendMessage':
+  $req = $bdd->prepare('INSERT INTO messages(idSender, idReceiver, content, date) VALUES ?, ?, ?, ?');
+  $req = $bdd->execute(array($_POST['idSender'], $_POST['idReceiver'], $_POST['content'], NOW()));
+break;
+
+case 'registerFacebook';
+
+// On initialise les variables :
+// On fais le check-up
+
+$count = $bdd->prepare("SELECT COUNT(*) AS nbrMail FROM facebook WHERE userid = ?");
+$count->execute(array($_POST['userid']));
+$req = $count->fetch(PDO::FETCH_ASSOC);
+
+if($req['nbrMail'] == 0) // L'adresse mail n'existe pas donc on peut vérifier le Pseudo
+{
+      $req = $bdd->prepare('INSERT INTO facebook(idInfluencer, username, userphoto, useremail, userid) VALUES (?, ?, ?, ?, ?)');
+      $req->execute(array(9, $_POST['username'], $_POST['userphoto'], $_POST['useremail'], $_POST['userid']));
+      var_dump($_POST);
+}
+else
+{
+    include('errorInscription.php?facebookCreated');
+    echo 'Erreur, compte Facebook déjà utilisé.';
+}
   break;
 
   default:
